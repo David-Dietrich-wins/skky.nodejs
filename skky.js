@@ -123,7 +123,7 @@ module.exports = {
     return this.nonNull(str).replace(/^\s+/, '')
   },
   rtrim: function (str) {
-    return this.nonNull(str).replace(/\s+$/, '')
+    return this.nonNull(str).trimEnd()
   },
   trim: function (str) {
     return this.nonNull(str).trim()
