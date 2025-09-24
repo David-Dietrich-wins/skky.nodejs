@@ -4,7 +4,13 @@
   "description": "General helper classes and methods.",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist node_modules && npm install",
+    "build": "echo Nothing to build",
+    "build:clean": "npm run clean && npm run build",
+    "build:clean:test": "npm run clean && npm run build:test:base && npm run test",
+    "build:test": "npm run build:test:base && npm run test",
+    "build:test:base": "rimraf dist",
+    "clean": "npm run clean:files && npm install",
+    "clean:files": "rimraf .next _next build dist lib node_modules out package-lock.json pnpm-lock.yaml yarn.lock",
     "test": "node test.js"
   },
   "repository": {
@@ -22,6 +28,7 @@
   },
   "homepage": "https://github.com/grayarrow/skky.nodejs#readme",
   "dependencies": {
+    "axios": "^1.12.2",
     "mongodb": "^6.19.0",
     "request-promise": "^4.2.6",
     "util": "^0.12.5"

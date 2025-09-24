@@ -1,4 +1,4 @@
-const rp = require('request-promise')
+const axios = require('axios')
 
 module.exports = {
   app: {},
@@ -129,36 +129,32 @@ module.exports = {
     return this.nonNull(str).trim()
   },
 
-  postForm: function (url, formData, returnsHtml) {
-    var options = {
-      method: 'POST',
-      uri: url,
-      form: formData,
+  postForm: async function (url, formData, returnsHtml) {
+    try {
+      const response = await axios.post(url, formData, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        responseType: returnsHtml ? 'text' : 'json',
+      })
+      return response.data
+    } catch (error) {
+      throw error.response ? error.response.data : error
     }
-
-    if (!returnsHtml) options.json = true
-
-    return rp(options)
   },
-  getJson: function (url, jSendData) {
-    var options = {
-      method: 'GET',
-      uri: url,
-      body: jSendData,
-      json: true,
+  getJson: async function (url, jSendData) {
+    try {
+      const response = await axios.get(url, { params: jSendData })
+      return response.data
+    } catch (error) {
+      throw error.response ? error.response.data : error
     }
-
-    return rp(options)
   },
-  postJson: function (url, jPostData) {
-    var options = {
-      method: 'POST',
-      uri: url,
-      body: jPostData,
-      json: true,
+  postJson: async function (url, jPostData) {
+    try {
+      const response = await axios.post(url, jPostData)
+      return response.data
+    } catch (error) {
+      throw error.response ? error.response.data : error
     }
-
-    return rp(options)
   },
   makeJsonLite: function (obj) {
     let cloned = Object.assign({}, obj)
